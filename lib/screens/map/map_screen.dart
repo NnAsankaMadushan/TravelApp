@@ -5,6 +5,7 @@ import 'package:geolocator/geolocator.dart';
 import '../../providers/post_provider.dart';
 import '../../models/post_model.dart';
 import '../post/post_detail_screen.dart';
+import 'location_posts_screen.dart';
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -159,19 +160,40 @@ class _MapScreenState extends State<MapScreen> {
               overflow: TextOverflow.ellipsis,
             ),
             const SizedBox(height: 12),
-            SizedBox(
-              width: double.infinity,
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (context) => PostDetailScreen(post: post),
-                    ),
-                  );
-                },
-                child: const Text('View Post'),
-              ),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => LocationPostsScreen(
+                            location: post.location,
+                            postId: post.postId,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.location_on),
+                    label: const Text('View Location'),
+                  ),
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => PostDetailScreen(post: post),
+                        ),
+                      );
+                    },
+                    child: const Text('View Post'),
+                  ),
+                ),
+              ],
             ),
           ],
         ),

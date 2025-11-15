@@ -124,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               children: [
                                 _buildStatColumn(
                                   'Posts',
-                                  postProvider.posts.length.toString(),
+                                  postProvider.userPosts.length.toString(),
                                 ),
                                 InkWell(
                                   onTap: () {
@@ -176,7 +176,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       );
                     }
 
-                    if (postProvider.posts.isEmpty) {
+                    if (postProvider.userPosts.isEmpty) {
                       return const SliverFillRemaining(
                         child: Center(child: Text('No posts yet')),
                       );
@@ -192,9 +192,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         ),
                         delegate: SliverChildBuilderDelegate(
                           (context, index) {
-                            return PostGridItem(post: postProvider.posts[index]);
+                            return PostGridItem(post: postProvider.userPosts[index]);
                           },
-                          childCount: postProvider.posts.length,
+                          childCount: postProvider.userPosts.length,
                         ),
                       ),
                     );

@@ -8,11 +8,13 @@ class PostProvider with ChangeNotifier {
 
   List<PostModel> _posts = [];
   List<PostModel> _friendsPosts = [];
+  List<PostModel> _userPosts = [];
   bool _isLoading = false;
   String? _error;
 
   List<PostModel> get posts => _posts;
   List<PostModel> get friendsPosts => _friendsPosts;
+  List<PostModel> get userPosts => _userPosts;
   bool get isLoading => _isLoading;
   String? get error => _error;
 
@@ -51,7 +53,7 @@ class PostProvider with ChangeNotifier {
       _isLoading = true;
       notifyListeners();
 
-      _posts = await _postService.getUserPosts(userId);
+      _userPosts = await _postService.getUserPosts(userId);
       _isLoading = false;
       notifyListeners();
     } catch (e) {
@@ -69,6 +71,7 @@ class PostProvider with ChangeNotifier {
       final success = await _postService.createPost(post);
       if (success) {
         _posts.insert(0, post);
+        _userPosts.insert(0, post);
       }
       _isLoading = false;
       notifyListeners();
@@ -88,6 +91,7 @@ class PostProvider with ChangeNotifier {
       // Update local state
       _updatePostInList(_posts, postId, userId, true);
       _updatePostInList(_friendsPosts, postId, userId, true);
+      _updatePostInList(_userPosts, postId, userId, true);
       notifyListeners();
     } catch (e) {
       _error = e.toString();
@@ -102,6 +106,7 @@ class PostProvider with ChangeNotifier {
       // Update local state
       _updatePostInList(_posts, postId, userId, false);
       _updatePostInList(_friendsPosts, postId, userId, false);
+      _updatePostInList(_userPosts, postId, userId, false);
       notifyListeners();
     } catch (e) {
       _error = e.toString();
@@ -144,6 +149,7 @@ class PostProvider with ChangeNotifier {
         // Update comment count
         _incrementCommentCount(_posts, comment.postId);
         _incrementCommentCount(_friendsPosts, comment.postId);
+        _incrementCommentCount(_userPosts, comment.postId);
         notifyListeners();
       }
       return success;

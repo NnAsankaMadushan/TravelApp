@@ -6,6 +6,7 @@ import '../models/post_model.dart';
 import '../providers/auth_provider.dart';
 import '../providers/post_provider.dart';
 import '../screens/post/post_detail_screen.dart';
+import '../screens/map/location_posts_screen.dart';
 
 class PostCard extends StatelessWidget {
   final PostModel post;
@@ -117,9 +118,13 @@ class PostCard extends StatelessWidget {
                 IconButton(
                   icon: const Icon(Icons.location_on_outlined),
                   onPressed: () {
-                    // Navigate to map with this location
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Location: ${post.location.displayName}')),
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => LocationPostsScreen(
+                          location: post.location,
+                          postId: post.postId,
+                        ),
+                      ),
                     );
                   },
                 ),
