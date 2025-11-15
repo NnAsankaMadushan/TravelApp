@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "257612075222",
+    "project_id": "travelapp-1a276",
+    "storage_bucket": "travelapp-1a276.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:257612075222:android:e9bacca54dc00a656f7977",
+        "android_client_info": {
+          "package_name": "com.asanka.travel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAk_Jv-hDFkL6FXCRjuX4vffdPUxaIMiE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
