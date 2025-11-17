@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/post_provider.dart';
 import '../../widgets/post_grid_item.dart';
+import '../../theme/app_theme.dart';
 import 'friends_list_screen.dart';
 import 'edit_profile_screen.dart';
 
@@ -85,85 +86,155 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        CircleAvatar(
-                          radius: 50,
-                          backgroundImage: user.profileImageUrl != null
-                              ? NetworkImage(user.profileImageUrl!)
-                              : null,
-                          child: user.profileImageUrl == null
-                              ? Text(
-                                  user.username[0].toUpperCase(),
-                                  style: const TextStyle(fontSize: 32),
-                                )
-                              : null,
+                        // Profile avatar with gradient border
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: AppTheme.primaryGradient,
+                            boxShadow: [
+                              BoxShadow(
+                                color: AppTheme.primaryPurple.withValues(alpha: 0.3),
+                                blurRadius: 20,
+                                offset: const Offset(0, 10),
+                              ),
+                            ],
+                          ),
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            padding: const EdgeInsets.all(3),
+                            child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: user.profileImageUrl != null
+                                  ? NetworkImage(user.profileImageUrl!)
+                                  : null,
+                              backgroundColor: AppTheme.lightPurple,
+                              child: user.profileImageUrl == null
+                                  ? Text(
+                                      user.username[0].toUpperCase(),
+                                      style: TextStyle(
+                                        fontSize: 32,
+                                        fontWeight: FontWeight.bold,
+                                        color: AppTheme.darkPurple,
+                                      ),
+                                    )
+                                  : null,
+                            ),
+                          ),
                         ),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 20),
                         Text(
                           user.username,
-                          style: const TextStyle(
-                            fontSize: 24,
+                          style: TextStyle(
+                            fontSize: 26,
                             fontWeight: FontWeight.bold,
+                            color: AppTheme.darkPurple,
                           ),
                         ),
                         if (user.bio != null) ...[
-                          const SizedBox(height: 8),
-                          Text(
-                            user.bio!,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.grey[600],
-                              fontSize: 14,
+                          const SizedBox(height: 10),
+                          Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 20,
+                              vertical: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              color: AppTheme.lightPurple.withValues(alpha: 0.2),
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            child: Text(
+                              user.bio!,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                color: Colors.grey[700],
+                                fontSize: 15,
+                              ),
                             ),
                           ),
                         ],
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 24),
                         Consumer<PostProvider>(
                           builder: (context, postProvider, _) {
-                            return Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                _buildStatColumn(
-                                  'Posts',
-                                  postProvider.userPosts.length.toString(),
+                            return Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 20,
+                              ),
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    AppTheme.lightPurple.withValues(alpha: 0.2),
+                                    AppTheme.lightPurple.withValues(alpha: 0.1),
+                                  ],
                                 ),
-                                InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const FriendsListScreen(),
-                                      ),
-                                    );
-                                  },
-                                  child: _buildStatColumn(
-                                    'Friends',
-                                    user.friends.length.toString(),
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: AppTheme.lightPurple.withValues(alpha: 0.3),
+                                  width: 1,
+                                ),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  _buildStatColumn(
+                                    'Posts',
+                                    postProvider.userPosts.length.toString(),
+                                    Icons.grid_on,
                                   ),
-                                ),
-                                _buildStatColumn(
-                                  'Requests',
-                                  user.friendRequests.length.toString(),
-                                ),
-                              ],
+                                  Container(
+                                    height: 40,
+                                    width: 1,
+                                    color: AppTheme.lightPurple,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const FriendsListScreen(),
+                                        ),
+                                      );
+                                    },
+                                    child: _buildStatColumn(
+                                      'Friends',
+                                      user.friends.length.toString(),
+                                      Icons.people,
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    width: 1,
+                                    color: AppTheme.lightPurple,
+                                  ),
+                                  _buildStatColumn(
+                                    'Requests',
+                                    user.friendRequests.length.toString(),
+                                    Icons.person_add,
+                                  ),
+                                ],
+                              ),
                             );
                           },
                         ),
-                        const SizedBox(height: 16),
-                        const Divider(),
-                        const SizedBox(height: 8),
-                        const Row(
+                        const SizedBox(height: 24),
+                        Row(
                           children: [
-                            Icon(Icons.grid_on),
-                            SizedBox(width: 8),
+                            Icon(Icons.grid_on, color: AppTheme.primaryPurple),
+                            const SizedBox(width: 8),
                             Text(
                               'Posts',
                               style: TextStyle(
-                                fontSize: 16,
+                                fontSize: 18,
                                 fontWeight: FontWeight.bold,
+                                color: AppTheme.darkPurple,
                               ),
                             ),
                           ],
                         ),
+                        const SizedBox(height: 8),
                       ],
                     ),
                   ),
@@ -208,14 +279,21 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 
-  Widget _buildStatColumn(String label, String count) {
+  Widget _buildStatColumn(String label, String count, IconData icon) {
     return Column(
       children: [
+        Icon(
+          icon,
+          color: AppTheme.primaryPurple,
+          size: 28,
+        ),
+        const SizedBox(height: 8),
         Text(
           count,
-          style: const TextStyle(
-            fontSize: 20,
+          style: TextStyle(
+            fontSize: 22,
             fontWeight: FontWeight.bold,
+            color: AppTheme.darkPurple,
           ),
         ),
         const SizedBox(height: 4),
@@ -223,7 +301,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           label,
           style: TextStyle(
             color: Colors.grey[600],
-            fontSize: 14,
+            fontSize: 13,
+            fontWeight: FontWeight.w500,
           ),
         ),
       ],

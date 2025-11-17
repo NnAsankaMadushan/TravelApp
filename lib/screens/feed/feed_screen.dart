@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/post_provider.dart';
 import '../../widgets/post_card.dart';
+import '../../theme/app_theme.dart';
 import '../post/create_post_screen.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -42,23 +43,41 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'TravelApp',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 24,
+        title: ShaderMask(
+          shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
+          child: const Text(
+            'TravelApp',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 26,
+              color: Colors.white,
+            ),
           ),
         ),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add_box_outlined),
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute(
-                  builder: (context) => const CreatePostScreen(),
+          Container(
+            margin: const EdgeInsets.only(right: 8),
+            decoration: BoxDecoration(
+              gradient: AppTheme.primaryGradient,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: [
+                BoxShadow(
+                  color: AppTheme.primaryPurple.withValues(alpha: 0.3),
+                  blurRadius: 8,
+                  offset: const Offset(0, 4),
                 ),
-              ).then((_) => _refreshPosts());
-            },
+              ],
+            ),
+            child: IconButton(
+              icon: const Icon(Icons.add_rounded, color: Colors.white),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const CreatePostScreen(),
+                  ),
+                ).then((_) => _refreshPosts());
+              },
+            ),
           ),
         ],
       ),
@@ -77,25 +96,40 @@ class _FeedScreenState extends State<FeedScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
-                    Icons.explore_outlined,
-                    size: 80,
-                    color: Colors.grey[400],
+                  Container(
+                    padding: const EdgeInsets.all(32),
+                    decoration: BoxDecoration(
+                      gradient: AppTheme.primaryGradient,
+                      shape: BoxShape.circle,
+                      boxShadow: [
+                        BoxShadow(
+                          color: AppTheme.primaryPurple.withValues(alpha: 0.3),
+                          blurRadius: 20,
+                          offset: const Offset(0, 10),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(
+                      Icons.explore_rounded,
+                      size: 60,
+                      color: Colors.white,
+                    ),
                   ),
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 24),
                   Text(
                     'No posts yet',
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.grey[600],
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: AppTheme.darkPurple,
                     ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Add friends or create your first post!',
                     style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.grey[500],
+                      fontSize: 15,
+                      color: Colors.grey[600],
                     ),
                   ),
                 ],
