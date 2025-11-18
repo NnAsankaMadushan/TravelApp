@@ -10,7 +10,6 @@ import '../../models/location_model.dart';
 import '../../providers/auth_provider.dart';
 import '../../providers/post_provider.dart';
 import '../../services/storage_service.dart';
-import '../../theme/app_theme.dart';
 
 class CreatePostScreen extends StatefulWidget {
   const CreatePostScreen({super.key});
@@ -45,9 +44,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error picking images: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error picking images: $e')));
       }
     }
   }
@@ -96,9 +95,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error getting location: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error getting location: $e')));
       }
     } finally {
       setState(() {
@@ -116,9 +115,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
     }
 
     if (_selectedLocation == null) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Please add a location')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text('Please add a location')));
       return;
     }
 
@@ -172,9 +171,9 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error creating post: $e')),
-        );
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text('Error creating post: $e')));
       }
     } finally {
       setState(() {
@@ -201,17 +200,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
               ),
             )
           else
-            TextButton(
-              onPressed: _createPost,
-              child: Text(
-                'Post',
-                style: TextStyle(
-                  color: AppTheme.primaryPurple,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
+            TextButton(onPressed: _createPost, child: const Text('Post')),
         ],
       ),
       body: SingleChildScrollView(
@@ -226,29 +215,15 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 child: Container(
                   height: 200,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF2A2A2A),
+                    color: Colors.grey[200],
                     borderRadius: BorderRadius.circular(12),
-                    border: Border.all(
-                      color: AppTheme.primaryPurple.withValues(alpha: 0.3),
-                      width: 2,
-                    ),
                   ),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(
-                        Icons.add_photo_alternate,
-                        size: 60,
-                        color: AppTheme.primaryPurple,
-                      ),
-                      const SizedBox(height: 8),
-                      Text(
-                        'Add Photos',
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                          fontSize: 16,
-                        ),
-                      ),
+                      Icon(Icons.add_photo_alternate, size: 60),
+                      SizedBox(height: 8),
+                      Text('Add Photos', style: TextStyle(color.Colors.black)),
                     ],
                   ),
                 ),
@@ -279,7 +254,10 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                                 top: 8,
                                 right: 8,
                                 child: IconButton(
-                                  icon: const Icon(Icons.cancel, color: Colors.white),
+                                  icon: const Icon(
+                                    Icons.cancel,
+                                    color: Colors.white,
+                                  ),
                                   onPressed: () {
                                     setState(() {
                                       _selectedImages.removeAt(index);
@@ -308,86 +286,34 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             TextField(
               controller: _captionController,
               maxLines: 5,
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 labelText: 'Caption',
-                labelStyle: TextStyle(color: Colors.grey[400]),
                 hintText: 'Share your travel story...',
-                hintStyle: TextStyle(color: Colors.grey[600]),
-                filled: true,
-                fillColor: const Color(0xFF2A2A2A),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide.none,
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: AppTheme.primaryPurple,
-                    width: 2,
-                  ),
-                ),
+                border: OutlineInputBorder(),
               ),
             ),
 
             const SizedBox(height: 24),
 
             // Location
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFF1A1A1A),
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: Colors.grey.shade800,
-                  width: 1,
-                ),
-              ),
+            Card(
               child: ListTile(
-                leading: Icon(
-                  Icons.location_on,
-                  color: AppTheme.primaryPurple,
-                ),
+                leading: const Icon(Icons.location_on),
                 title: _selectedLocation != null
-                    ? Text(
-                        _selectedLocation!.displayName,
-                        style: const TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      )
-                    : Text(
-                        'Add Location',
-                        style: TextStyle(
-                          color: Colors.grey[400],
-                        ),
-                      ),
+                    ? Text(_selectedLocation!.displayName)
+                    : const Text('Add Location'),
                 subtitle: _selectedLocation?.address != null
-                    ? Text(
-                        _selectedLocation!.address!,
-                        style: TextStyle(color: Colors.grey[500]),
-                      )
+                    ? Text(_selectedLocation!.address!)
                     : null,
                 trailing: _isLoadingLocation
-                    ? SizedBox(
+                    ? const SizedBox(
                         width: 20,
                         height: 20,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: AppTheme.primaryPurple,
-                        ),
+                        child: CircularProgressIndicator(strokeWidth: 2),
                       )
-                    : Container(
-                        decoration: BoxDecoration(
-                          color: AppTheme.primaryPurple.withValues(alpha: 0.2),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: IconButton(
-                          icon: Icon(
-                            Icons.my_location,
-                            color: AppTheme.primaryPurple,
-                          ),
-                          onPressed: _getCurrentLocation,
-                        ),
+                    : IconButton(
+                        icon: const Icon(Icons.my_location),
+                        onPressed: _getCurrentLocation,
                       ),
               ),
             ),
@@ -397,10 +323,7 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
                   'Location is required for posting',
-                  style: TextStyle(
-                    color: Colors.grey[600],
-                    fontSize: 12,
-                  ),
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
                   textAlign: TextAlign.center,
                 ),
               ),
