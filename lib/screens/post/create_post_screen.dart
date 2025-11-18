@@ -214,11 +214,22 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
             ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF1A0B2E),
+              Color(0xFF0D0621),
+            ],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
             // Image selection
             if (_selectedImages.isEmpty)
               GestureDetector(
@@ -395,7 +406,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
                   textAlign: TextAlign.center,
                 ),
               ),
-          ],
+            ],
+          ),
         ),
       ),
     );
