@@ -3,6 +3,7 @@ import '../feed/feed_screen.dart';
 import '../map/map_screen.dart';
 import '../profile/profile_screen.dart';
 import '../search/search_screen.dart';
+import '../../theme/app_theme.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,23 +37,26 @@ class _HomeScreenState extends State<HomeScreen> {
           });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Theme.of(context).primaryColor,
-        unselectedItemColor: Colors.grey,
-        items: const [
+        selectedItemColor: AppTheme.primaryPurple,
+        unselectedItemColor: const Color(0xFF6B7280),
+        backgroundColor: Colors.black,
+        selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w600),
+        unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.normal),
+        items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(_currentIndex == 0 ? Icons.home : Icons.home_outlined),
             label: 'Feed',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.map),
+            icon: Icon(_currentIndex == 1 ? Icons.map : Icons.map_outlined),
             label: 'Map',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.search),
+            icon: Icon(_currentIndex == 2 ? Icons.search : Icons.search_outlined),
             label: 'Search',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(_currentIndex == 3 ? Icons.person : Icons.person_outline),
             label: 'Profile',
           ),
         ],
