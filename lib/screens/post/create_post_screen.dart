@@ -215,6 +215,8 @@ class _CreatePostScreenState extends State<CreatePostScreen> {
         ],
       ),
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,

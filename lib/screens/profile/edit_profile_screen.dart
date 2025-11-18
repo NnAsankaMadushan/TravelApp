@@ -95,35 +95,41 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
           );
         }
 
-        // Add timeout to image upload
+        // Add timeout to image upload (60 seconds)
         profileImageUrl = await _storageService.uploadImage(
           _selectedImage!,
           'profile_images/${currentUser.uid}',
         ).timeout(
-          const Duration(seconds: 30),
+          const Duration(seconds: 60),
           onTimeout: () {
             throw Exception('Image upload timed out. Please check your connection.');
           },
         );
       }
 
-      // Update user profile
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Updating profile...')),
+        );
+      }
+
+      // Update user profile (60 seconds timeout)
       final success = await _userService.updateProfile(
         userId: currentUser.uid,
         username: _usernameController.text.trim(),
         bio: _bioController.text.trim(),
         profileImageUrl: profileImageUrl,
       ).timeout(
-        const Duration(seconds: 15),
+        const Duration(seconds: 60),
         onTimeout: () {
-          throw Exception('Profile update timed out. Please try again.');
+          throw Exception('Profile update timed out. Please check your internet connection.');
         },
       );
 
       if (success) {
         // Reload user data with timeout
         await authProvider.reloadUserData().timeout(
-          const Duration(seconds: 10),
+          const Duration(seconds: 30),
           onTimeout: () {
             // Don't throw error here, profile was already updated
             print('Warning: User data reload timed out');
