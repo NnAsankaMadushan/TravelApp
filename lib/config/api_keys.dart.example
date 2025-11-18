@@ -1,0 +1,9 @@
+// Copy this file to api_keys.dart and replace with your actual API keys
+// NEVER commit api_keys.dart to version control
+
+class ApiKeys {
+  // Firebase Configuration
+  static const String firebaseProjectId = 'travelapp-1a276';
+  static const String firebaseStorageBucket = 'travelapp-1a276.firebasestorage.app';
+
+}
