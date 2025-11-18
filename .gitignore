@@ -43,3 +43,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Environment variables and API keys
+.env
+.env.local
+.env.*.local
+lib/config/api_keys.dart
+android/key.properties
+google-services.json
+GoogleService-Info.plist
