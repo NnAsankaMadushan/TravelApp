@@ -52,9 +52,9 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     try {
       final XFile? image = await _imagePicker.pickImage(
         source: ImageSource.gallery,
-        maxWidth: 512,
-        maxHeight: 512,
-        imageQuality: 85,
+        maxWidth: 800,
+        maxHeight: 800,
+        imageQuality: 70,
       );
       if (image != null) {
         setState(() {
@@ -89,9 +89,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
       // Upload new profile image if selected
       if (_selectedImage != null) {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Uploading image...')),
+          );
+        }
+
+        // Add timeout to image upload
         profileImageUrl = await _storageService.uploadImage(
           _selectedImage!,
           'profile_images/${currentUser.uid}',
+        ).timeout(
+          const Duration(seconds: 30),
+          onTimeout: () {
+            throw Exception('Image upload timed out. Please check your connection.');
+          },
         );
       }
 
@@ -101,11 +113,22 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
         username: _usernameController.text.trim(),
         bio: _bioController.text.trim(),
         profileImageUrl: profileImageUrl,
+      ).timeout(
+        const Duration(seconds: 15),
+        onTimeout: () {
+          throw Exception('Profile update timed out. Please try again.');
+        },
       );
 
       if (success) {
-        // Reload user data
-        await authProvider.reloadUserData();
+        // Reload user data with timeout
+        await authProvider.reloadUserData().timeout(
+          const Duration(seconds: 10),
+          onTimeout: () {
+            // Don't throw error here, profile was already updated
+            print('Warning: User data reload timed out');
+          },
+        );
 
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
@@ -119,7 +142,10 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error updating profile: $e')),
+          SnackBar(
+            content: Text('Error updating profile: $e'),
+            duration: const Duration(seconds: 4),
+          ),
         );
       }
     } finally {
