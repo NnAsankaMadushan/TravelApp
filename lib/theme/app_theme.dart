@@ -21,29 +21,29 @@ class AppTheme {
     end: Alignment.bottomRight,
   );
 
-  // Light theme
+  // Light theme (now dark-based)
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    brightness: Brightness.light,
+    brightness: Brightness.dark,
     colorScheme: ColorScheme.fromSeed(
       seedColor: primaryPurple,
       primary: primaryPurple,
       secondary: secondaryPurple,
       tertiary: accentPink,
-      surface: Colors.white,
-      brightness: Brightness.light,
+      surface: const Color(0xFF1A1A1A),
+      brightness: Brightness.dark,
     ),
-    scaffoldBackgroundColor: const Color(0xFFFAFAFA),
+    scaffoldBackgroundColor: const Color(0xFF000000),
 
     // AppBar theme
     appBarTheme: const AppBarTheme(
       centerTitle: false,
       elevation: 0,
-      backgroundColor: Colors.white,
-      foregroundColor: Color(0xFF1F2937),
+      backgroundColor: Color(0xFF000000),
+      foregroundColor: Colors.white,
       surfaceTintColor: Colors.transparent,
       titleTextStyle: TextStyle(
-        color: Color(0xFF1F2937),
+        color: Colors.white,
         fontSize: 24,
         fontWeight: FontWeight.bold,
       ),
@@ -55,7 +55,7 @@ class AppTheme {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
       ),
-      color: Colors.white,
+      color: const Color(0xFF1A1A1A),
       surfaceTintColor: Colors.transparent,
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
     ),
@@ -63,7 +63,7 @@ class AppTheme {
     // Input decoration theme
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
-      fillColor: const Color(0xFFF3F4F6),
+      fillColor: const Color(0xFF2A2A2A),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(12),
         borderSide: BorderSide.none,
@@ -87,6 +87,8 @@ class AppTheme {
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
       prefixIconColor: primaryPurple,
       suffixIconColor: Colors.grey,
+      labelStyle: const TextStyle(color: Colors.grey),
+      hintStyle: const TextStyle(color: Colors.grey),
     ),
 
     // Elevated button theme
@@ -126,9 +128,9 @@ class AppTheme {
 
     // Bottom navigation bar theme
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFF000000),
       selectedItemColor: primaryPurple,
-      unselectedItemColor: Color(0xFF9CA3AF),
+      unselectedItemColor: Color(0xFF6B7280),
       type: BottomNavigationBarType.fixed,
       elevation: 8,
       selectedLabelStyle: TextStyle(fontWeight: FontWeight.w600),
@@ -154,7 +156,7 @@ class AppTheme {
 
     // Dialog theme
     dialogTheme: DialogThemeData(
-      backgroundColor: Colors.white,
+      backgroundColor: const Color(0xFF1A1A1A),
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),

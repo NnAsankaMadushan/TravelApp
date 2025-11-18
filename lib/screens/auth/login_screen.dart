@@ -57,9 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppTheme.primaryPurple.withValues(alpha: 0.1),
-              AppTheme.lightPurple.withValues(alpha: 0.3),
-              Colors.white,
+              const Color(0xFF000000),
+              AppTheme.primaryPurple.withValues(alpha: 0.2),
+              const Color(0xFF000000),
             ],
           ),
         ),
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: AppTheme.primaryPurple.withOpacity(0.3),
+                          color: AppTheme.primaryPurple.withValues(alpha: 0.3),
                           blurRadius: 20,
                           offset: const Offset(0, 10),
                         ),
@@ -93,20 +93,23 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   const SizedBox(height: 32),
-                  Text(
-                    'TravelApp',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.darkPurple,
-                        ),
+                  ShaderMask(
+                    shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
+                    child: Text(
+                      'TravelApp',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Share your travel adventures',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[700],
+                          color: Colors.grey[400],
                         ),
                   ),
                   const SizedBox(height: 48),
@@ -217,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   children: [
                     Text(
                       "Don't have an account? ",
-                      style: TextStyle(color: Colors.grey[700]),
+                      style: TextStyle(color: Colors.grey[400]),
                     ),
                     TextButton(
                       onPressed: () {

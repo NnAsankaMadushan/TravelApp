@@ -103,7 +103,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           child: Container(
                             decoration: const BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Colors.white,
+                              color: Color(0xFF1A1A1A),
                             ),
                             padding: const EdgeInsets.all(3),
                             child: CircleAvatar(
@@ -111,14 +111,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               backgroundImage: user.profileImageUrl != null
                                   ? NetworkImage(user.profileImageUrl!)
                                   : null,
-                              backgroundColor: AppTheme.lightPurple,
+                              backgroundColor: AppTheme.darkPurple,
                               child: user.profileImageUrl == null
                                   ? Text(
                                       user.username[0].toUpperCase(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         fontSize: 32,
                                         fontWeight: FontWeight.bold,
-                                        color: AppTheme.darkPurple,
+                                        color: Colors.white,
                                       ),
                                     )
                                   : null,
@@ -126,12 +126,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         const SizedBox(height: 20),
-                        Text(
-                          user.username,
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: AppTheme.darkPurple,
+                        ShaderMask(
+                          shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
+                          child: Text(
+                            user.username,
+                            style: const TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                         if (user.bio != null) ...[
@@ -149,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               user.bio!,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: Colors.grey[700],
+                                color: Colors.grey[400],
                                 fontSize: 15,
                               ),
                             ),
@@ -229,7 +232,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
-                                color: AppTheme.darkPurple,
+                                color: Colors.grey[200],
                               ),
                             ),
                           ],
@@ -290,17 +293,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
         const SizedBox(height: 8),
         Text(
           count,
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 22,
             fontWeight: FontWeight.bold,
-            color: AppTheme.darkPurple,
+            color: Colors.white,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           label,
           style: TextStyle(
-            color: Colors.grey[600],
+            color: Colors.grey[400],
             fontSize: 13,
             fontWeight: FontWeight.w500,
           ),

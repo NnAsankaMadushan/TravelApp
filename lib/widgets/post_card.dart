@@ -23,9 +23,10 @@ class PostCard extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
       elevation: 0,
+      color: const Color(0xFF1A1A1A),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.grey.shade200, width: 1),
+        side: BorderSide(color: Colors.grey.shade800, width: 1),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,6 +69,7 @@ class PostCard extends StatelessWidget {
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 15,
+                          color: Colors.white,
                         ),
                       ),
                       const SizedBox(height: 2),
@@ -84,7 +86,7 @@ class PostCard extends StatelessWidget {
                               post.location.displayName,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
-                                color: Colors.grey[600],
+                                color: Colors.grey[400],
                                 fontSize: 13,
                               ),
                             ),
@@ -144,8 +146,8 @@ class PostCard extends StatelessWidget {
                         Container(
                           decoration: BoxDecoration(
                             color: isLiked
-                                ? AppTheme.accentPink.withValues(alpha: 0.1)
-                                : Colors.grey.shade100,
+                                ? AppTheme.accentPink.withValues(alpha: 0.2)
+                                : const Color(0xFF2A2A2A),
                             borderRadius: BorderRadius.circular(20),
                           ),
                           child: IconButton(
@@ -177,13 +179,13 @@ class PostCard extends StatelessWidget {
                 const SizedBox(width: 12),
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.grey.shade100,
+                    color: const Color(0xFF2A2A2A),
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: IconButton(
                     icon: Icon(
                       Icons.comment_outlined,
-                      color: Colors.grey.shade600,
+                      color: Colors.grey.shade400,
                     ),
                     onPressed: () {
                       Navigator.of(context).push(

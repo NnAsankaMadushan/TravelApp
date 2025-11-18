@@ -69,9 +69,9 @@ class _SignupScreenState extends State<SignupScreen> {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              AppTheme.primaryPurple.withValues(alpha: 0.1),
-              AppTheme.lightPurple.withValues(alpha: 0.3),
-              Colors.white,
+              const Color(0xFF000000),
+              AppTheme.primaryPurple.withValues(alpha: 0.2),
+              const Color(0xFF000000),
             ],
           ),
         ),
@@ -84,20 +84,23 @@ class _SignupScreenState extends State<SignupScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 24),
-                  Text(
-                    'Create Account',
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          fontWeight: FontWeight.bold,
-                          color: AppTheme.darkPurple,
-                        ),
+                  ShaderMask(
+                    shaderCallback: (bounds) => AppTheme.primaryGradient.createShader(bounds),
+                    child: Text(
+                      'Create Account',
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   Text(
                     'Join us and share your adventures',
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                          color: Colors.grey[700],
+                          color: Colors.grey[400],
                         ),
                   ),
                   const SizedBox(height: 32),

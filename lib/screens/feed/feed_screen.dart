@@ -121,7 +121,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     style: TextStyle(
                       fontSize: 22,
                       fontWeight: FontWeight.bold,
-                      color: AppTheme.darkPurple,
+                      color: Colors.grey[200],
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -129,7 +129,7 @@ class _FeedScreenState extends State<FeedScreen> {
                     'Add friends or create your first post!',
                     style: TextStyle(
                       fontSize: 15,
-                      color: Colors.grey[600],
+                      color: Colors.grey[400],
                     ),
                   ),
                 ],
